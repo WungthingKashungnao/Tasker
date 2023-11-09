@@ -139,9 +139,68 @@ const SidebarStyled = styled.nav`
     }
   }
 
-  /* > h1 {
-    margin-left: 1rem;
-    font-size: clamp(1.2rem, 4vw, 1.4rem);
-    line-height: 100%;
-  } */
+  .active {
+    background-color: ${(props) => props.theme.activeNavLink};
+    i,
+    a {
+      color: ${(props) => props.theme.colorIcons2};
+      line-height: 1;
+    }
+  }
+
+  .nav-item {
+    position: relative;
+    padding: 0.7rem 1rem 0.8rem 2.1rem;
+    margin: 0.3rem 0;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: center;
+    cursor: pointer;
+
+    &::after {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 100%;
+      background-color: ${(props) => props.theme.activeNavLinkHover};
+      z-index: 1;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &::before {
+      position: absolute;
+      content: "";
+      right: 0;
+      top: 0;
+      width: 0;
+      height: 100%;
+      background-color: ${(props) => props.theme.colorGreenDark};
+      z-index: 1;
+      transition: all 0.3s ease-in-out;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    a {
+      font-weight: 500;
+    }
+    i {
+      /* display: flex;
+      justify-content: center;
+      align-items: center; */
+      color: ${(props) => props.theme.colorIcons};
+    }
+    &:hover {
+      &::after {
+        width: 100%;
+      }
+      &::before {
+        width: 5px;
+      }
+    }
+  }
+  .active::before {
+    width: 5px;
+  }
 `;
