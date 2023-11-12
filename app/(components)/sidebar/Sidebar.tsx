@@ -5,6 +5,7 @@ import menu from "../utils/menu";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { UserButton } from "@clerk/nextjs"; //button to sign out from clerk
 
 const Sidebar = () => {
   const { theme } = useGlobalState();
@@ -25,13 +26,13 @@ const Sidebar = () => {
           <Image
             width={70}
             height={70}
-            src="https://xsgames.co/randomusers/avatar.php?g=female"
+            src="https://xsgames.co/randomusers/avatar.php?g=pixel"
             alt="profile imgae"
           />
         </div>
         <h1>
-          <span>Kai</span>
-          <span>Briggs</span>
+          <span>Athing</span>
+          <span>Kash</span>
         </h1>
       </div>
       {/* profile end */}
@@ -50,7 +51,10 @@ const Sidebar = () => {
       </ul>
       {/* nav menu end */}
 
-      <button></button>
+      <button>
+        <UserButton afterSignOutUrl="/" />
+        Sign Out
+      </button>
     </SidebarStyled>
   );
 };
