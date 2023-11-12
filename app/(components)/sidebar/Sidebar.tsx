@@ -5,7 +5,6 @@ import menu from "../utils/menu";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { link } from "fs";
 
 const Sidebar = () => {
   const { theme } = useGlobalState();
