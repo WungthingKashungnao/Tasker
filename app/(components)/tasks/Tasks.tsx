@@ -1,10 +1,15 @@
 "use client";
 import styled from "styled-components";
 import { useGlobalState } from "../(context)/globalProvider";
+import CreateContent from "../modals/CreateContent";
 
 const Tasks = () => {
   const { theme } = useGlobalState();
-  return <TaskStyled theme={theme}>Tasks</TaskStyled>;
+  return (
+    <TaskStyled theme={theme}>
+      <CreateContent />
+    </TaskStyled>
+  );
 };
 
 export default Tasks;
