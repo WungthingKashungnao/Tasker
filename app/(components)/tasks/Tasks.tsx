@@ -2,12 +2,32 @@
 import styled from "styled-components";
 import { useGlobalState } from "../(context)/globalProvider";
 import CreateContent from "../modals/CreateContent";
+import TaskItem from "../TaskItem/TaskItem";
 
-const Tasks = () => {
+interface Props {
+  title: string;
+  tasks: any[];
+}
+
+const Tasks = ({ title, tasks }: Props) => {
   const { theme } = useGlobalState();
   return (
     <TaskStyled theme={theme}>
-      <CreateContent />
+      {/* <CreateContent /> */}
+      <h1>{title}</h1>
+      <div className="tasks grid">
+        {tasks?.map((task) => (
+          <TaskItem
+            key={task.id}
+            title={task.title}
+            description={task.description}
+            date={task.date}
+            isCompleted={task.isCompleted}
+            isImportant={task.isImportant}
+            _id={task._id}
+          />
+        ))}
+      </div>
     </TaskStyled>
   );
 };

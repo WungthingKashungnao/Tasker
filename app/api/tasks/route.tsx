@@ -46,7 +46,7 @@ export const POST = async (req: Request) => {
 
     return NextResponse.json(task);
   } catch (error) {
-    console.log("Error creating task!", error);
+    // console.log("Error creating task!", error);
     return NextResponse.json({ Message: "Error creating task!", status: 500 });
   }
 };
@@ -55,6 +55,18 @@ export const POST = async (req: Request) => {
 // function to get tasks start
 export const GET = async (req: Request) => {
   try {
+    const { userId } = auth();
+    if (!userId) {
+      return NextResponse.json({ message: "unauthorized", status: 401 });
+    }
+    const tasks = await prisma.task.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    // console.log("Tasks:-", tasks);
+    return NextResponse.json(tasks);
   } catch (error) {
     console.log("Error gettin tasks", error);
     return NextResponse.json({ Message: "Error getting tasks", status: 500 });

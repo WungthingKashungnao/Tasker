@@ -54,7 +54,7 @@ const CreateContent = () => {
       }
 
       toast.success("Task created succesfully!");
-      console.log(res);
+      // console.log(res);
     } catch (error) {
       toast.error("Something went wrong!");
       console.log(error);
