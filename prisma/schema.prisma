@@ -18,7 +18,7 @@ model Task {
   isCompleted Boolean @default(false)
   isImportant Boolean @default(false)
 
-  createdAt DateTime @default(now()) @map("createdAt")
+  createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
   userId    String
 }
