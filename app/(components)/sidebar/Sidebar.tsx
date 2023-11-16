@@ -5,12 +5,15 @@ import menu from "../utils/menu";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { UserButton } from "@clerk/nextjs"; //button to sign out from clerk
+import { UserButton, useClerk } from "@clerk/nextjs"; //button to sign out from clerk
+import Button from "../button/Button";
+import { logout } from "../utils/Icons";
 
 const Sidebar = () => {
   const { theme } = useGlobalState();
   const router = useRouter();
   const pathname = usePathname();
+  const { signOut } = useClerk();
 
   // function to route to the menu link
   const handleClick = (link: string) => {
@@ -52,10 +55,24 @@ const Sidebar = () => {
       </ul>
       {/* nav menu end */}
 
-      <button>
+      <div className="sign-out relative m-6">
+        <Button
+          name="Sign-Out"
+          type="submit"
+          //@ts-ignore
+          selector="btn-login"
+          padding="0.4rem 0.8rem"
+          borderRad="0.8rem"
+          fw="500"
+          fs="1.2rem"
+          icon={logout}
+          click={() => signOut(() => router.push("/sign-in"))}
+        />
+      </div>
+      {/* <button>
         <UserButton afterSignOutUrl="/" />
         Sign Out
-      </button>
+      </button> */}
     </SidebarStyled>
   );
 };
