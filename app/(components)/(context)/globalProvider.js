@@ -3,6 +3,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import themes from "./themes"; //array of themes
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useUser } from "@clerk/nextjs";
 
 export const GlobalContext = createContext();
 export const GlobalUpdateContext = createContext();
@@ -13,6 +14,7 @@ export const GlobalProvider = ({ children }) => {
   const theme = themes[selectedTheme]; //selecting the theme from the array
   const [loading, setIsloading] = useState(false);
   const [tasks, setTasks] = useState([]); //state to handle tasks coming from api
+  const { user } = useUser();
 
   // function to fetch all tasks from the api
   const allTasks = async () => {
@@ -29,8 +31,10 @@ export const GlobalProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    allTasks();
-  }, []);
+    if (user) {
+      allTasks();
+    }
+  }, [user]);
   return (
     <GlobalContext.Provider value={{ theme, tasks }}>
       <GlobalUpdateContext.Provider value={setSelectedTheme}>
