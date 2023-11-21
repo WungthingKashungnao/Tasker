@@ -3,8 +3,10 @@
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useGlobalState } from "../(context)/globalProvider";
 
 const CreateContent = () => {
+  const { allTasks } = useGlobalState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -53,6 +55,7 @@ const CreateContent = () => {
         toast.error(res.data.error);
       }
 
+      allTasks();
       toast.success("Task created succesfully!");
       // console.log(res);
     } catch (error) {

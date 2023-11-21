@@ -10,7 +10,7 @@ interface Props {
   date: String;
   isCompleted: boolean;
   isImportant: boolean;
-  _id: String;
+  id: String;
 }
 
 const TaskItem = ({
@@ -19,9 +19,10 @@ const TaskItem = ({
   date,
   isCompleted,
   isImportant,
-  _id,
+  id,
 }: Props) => {
-  const { theme } = useGlobalState();
+  const { theme, deleteTask } = useGlobalState();
+
   return (
     <TaskItemStyled theme={theme} className="task">
       <div className="task-details">
@@ -42,9 +43,11 @@ const TaskItem = ({
             )}
           </div>
           <button className="edit">{edit}</button>
-          <button className="delete ml-2">{trash}</button>
-          <p>{isCompleted}</p>
-          <p>{isImportant}</p>
+          <button className="delete ml-2" onClick={() => deleteTask(id)}>
+            {trash}
+          </button>
+          {/* <p>{isCompleted}</p>
+          <p>{isImportant}</p> */}
         </div>
       </div>
     </TaskItemStyled>
