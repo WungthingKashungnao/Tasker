@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["xsgames.co"],
+    domains: [
+      "locahost",
+      "xsgames.co",
+      "https://img.clerk.com/",
+      "img.clerk.com",
+    ],
   },
 };
 

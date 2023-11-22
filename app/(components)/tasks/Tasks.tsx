@@ -14,7 +14,7 @@ const Tasks = ({ title, tasks }: Props) => {
   const { theme, loading } = useGlobalState();
   return (
     <TaskStyled theme={theme}>
-      <CreateContent />
+      {/* <CreateContent /> */}
       <h1>{title}</h1>
       {!loading ? (
         <div className="tasks grid">

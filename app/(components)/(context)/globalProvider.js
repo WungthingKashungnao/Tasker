@@ -42,6 +42,13 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  // function to fetch completed tasks
+  const completedTasks = tasks.filter((task) => task.isCompleted === true);
+  // function to fetch incomplete tasks
+  const inCompleteTasks = tasks.filter((task) => task.isCompleted === false);
+
+  // function to fetch important tasks
+  const importantTasks = tasks.filter((task) => task.isImportant === true);
   useEffect(() => {
     if (user) {
       allTasks();
@@ -49,7 +56,16 @@ export const GlobalProvider = ({ children }) => {
   }, [user]);
   return (
     <GlobalContext.Provider
-      value={{ theme, tasks, deleteTask, loading, allTasks }}
+      value={{
+        theme,
+        tasks,
+        deleteTask,
+        loading,
+        allTasks,
+        completedTasks,
+        inCompleteTasks,
+        importantTasks,
+      }}
     >
       <GlobalUpdateContext.Provider value={setSelectedTheme}>
         {children}

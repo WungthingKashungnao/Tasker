@@ -5,7 +5,7 @@ import menu from "../utils/menu";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { UserButton, useClerk } from "@clerk/nextjs"; //button to sign out from clerk
+import { UserButton, useClerk, useUser } from "@clerk/nextjs"; //button to sign out from clerk
 import Button from "../button/Button";
 import { logout } from "../utils/Icons";
 
@@ -20,22 +20,35 @@ const Sidebar = () => {
     router.push(link);
   };
 
+  const userData = useUser().user;
+
+  const { firstName, lastName, imageUrl } = userData || {
+    firstName: "",
+    lastName: "",
+    imageUrl: "",
+  };
+
   return (
     <SidebarStyled theme={theme}>
       {/* profile start */}
       <div className="profile">
         <div className="profile-overlay"></div>
         <div className="image">
-          <Image
+          {/* <Image
             width={70}
             height={70}
             src="https://xsgames.co/randomusers/avatar.php?g=pixel"
             alt="profile imgae"
-          />
+          /> */}
+          <div className="user-btn w-full h-full flex justify-center items-center border border-emerald-500 rounded-full">
+            <UserButton />
+          </div>
         </div>
         <h1>
-          <span>Athing</span>
-          <span>Kash</span>
+          {/* <span>First</span>
+          <span>Last</span> */}
+          <span>{firstName}</span>
+          <span>{lastName}</span>
         </h1>
       </div>
       {/* profile end */}
@@ -100,6 +113,8 @@ const SidebarStyled = styled.nav`
     font-weight: 500;
     color: ${(props) => props.theme.colorGrey0};
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
 
     &:hover {
