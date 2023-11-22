@@ -46,9 +46,21 @@ export const GlobalProvider = ({ children }) => {
   const completedTasks = tasks.filter((task) => task.isCompleted === true);
   // function to fetch incomplete tasks
   const inCompleteTasks = tasks.filter((task) => task.isCompleted === false);
-
   // function to fetch important tasks
   const importantTasks = tasks.filter((task) => task.isImportant === true);
+  // function to update task
+  const updateTask = async (task) => {
+    try {
+      const res = await axios.put(`/api/tasks/${task.id}`, task);
+      toast.success("Task Updated");
+      allTasks();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
   useEffect(() => {
     if (user) {
       allTasks();
@@ -65,6 +77,7 @@ export const GlobalProvider = ({ children }) => {
         completedTasks,
         inCompleteTasks,
         importantTasks,
+        updateTask,
       }}
     >
       <GlobalUpdateContext.Provider value={setSelectedTheme}>
