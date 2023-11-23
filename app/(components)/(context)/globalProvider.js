@@ -15,6 +15,16 @@ export const GlobalProvider = ({ children }) => {
   const [loading, setIsloading] = useState(false);
   const [tasks, setTasks] = useState([]); //state to handle tasks coming from api
   const { user } = useUser();
+  const [modal, setModal] = useState(false);
+
+  // function to open the create task modal
+  const openModal = () => {
+    setModal(true);
+  };
+  // function to close the create task modal
+  const closeModal = () => {
+    setModal(false);
+  };
 
   // function to fetch all tasks from the api
   const allTasks = async () => {
@@ -78,6 +88,9 @@ export const GlobalProvider = ({ children }) => {
         inCompleteTasks,
         importantTasks,
         updateTask,
+        modal,
+        closeModal,
+        openModal,
       }}
     >
       <GlobalUpdateContext.Provider value={setSelectedTheme}>
