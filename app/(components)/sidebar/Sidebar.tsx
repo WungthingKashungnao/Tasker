@@ -2,15 +2,14 @@
 import styled from "styled-components";
 import { useGlobalState } from "../(context)/globalProvider";
 import menu from "../utils/menu";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { UserButton, useClerk, useUser } from "@clerk/nextjs"; //button to sign out from clerk
 import Button from "../button/Button";
-import { logout } from "../utils/Icons";
+import { arrowLeft, bars, logout } from "../utils/Icons";
 
 const Sidebar = () => {
-  const { theme } = useGlobalState();
+  const { theme, collapsed, setCollpased } = useGlobalState();
   const router = useRouter();
   const pathname = usePathname();
   const { signOut } = useClerk();
@@ -29,7 +28,16 @@ const Sidebar = () => {
   };
 
   return (
-    <SidebarStyled theme={theme}>
+    <SidebarStyled theme={theme} collapsed={collapsed}>
+      {/* button to toggle sidebar start */}
+      <button
+        className="toggle-nav shadow-slate-600 shadow-sm"
+        onClick={() => setCollpased(!collapsed)}
+      >
+        {collapsed ? bars : arrowLeft}
+      </button>
+      {/* button to toggle sidebar end */}
+
       {/* profile start */}
       <div className="profile">
         <div className="profile-overlay"></div>
@@ -79,7 +87,7 @@ const Sidebar = () => {
           fw="500"
           fs="1.2rem"
           icon={logout}
-          click={() => signOut(() => router.push("/sign-in"))}
+          click={() => signOut(() => router.push("/"))}
         />
       </div>
       {/* <button>
@@ -92,7 +100,7 @@ const Sidebar = () => {
 
 export default Sidebar;
 
-const SidebarStyled = styled.nav`
+const SidebarStyled = styled.nav<{ collapsed: boolean }>`
   position: relative;
   width: ${(props) => props.theme.sidebarWidth};
   background-color: ${(props) => props.theme.colorBg2};
@@ -103,6 +111,10 @@ const SidebarStyled = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   color: ${(props) => props.theme.colorGrey3};
+  transition: all 0.3s cubic-bezier(0.53, 0.21, 0, 1);
+
+  transform: ${(props) =>
+    props.collapsed ? "translateX(-107%)" : "translateX(0)"};
 
   .profile {
     margin: 1.5rem;
@@ -238,5 +250,26 @@ const SidebarStyled = styled.nav`
   }
   .active::before {
     width: 5px;
+  }
+
+  .toggle-nav {
+    display: none;
+    position: absolute;
+    right: -3rem;
+    top: 5rem;
+    padding: 1rem;
+
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background-color: ${(props) => props.theme.colorBg2};
+  }
+
+  @media screen and (max-width: 768px) {
+    position: fixed;
+    height: calc(100vh - 2rem);
+    z-index: 100;
+    .toggle-nav {
+      display: block;
+    }
   }
 `;

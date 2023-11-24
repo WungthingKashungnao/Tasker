@@ -15,7 +15,8 @@ export const GlobalProvider = ({ children }) => {
   const [loading, setIsloading] = useState(false);
   const [tasks, setTasks] = useState([]); //state to handle tasks coming from api
   const { user } = useUser();
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false); //state to open and close modal to create task
+  const [collapsed, setCollpased] = useState(false); //state to open and close sidebar
 
   // function to open the create task modal
   const openModal = () => {
@@ -31,9 +32,15 @@ export const GlobalProvider = ({ children }) => {
     setIsloading(true);
     try {
       const res = await axios.get("/api/tasks");
-      setTasks(res.data);
+
+      // sorting the data with the new ones coming at first
+      const sorted = res.data.sort((a, b) => {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      });
+      setTasks(sorted);
       setIsloading(false);
-      // console.log(res.data);
     } catch (error) {
       console.log("fetching data error", error);
       toast.error("Fetching data error!");
@@ -64,7 +71,6 @@ export const GlobalProvider = ({ children }) => {
       const res = await axios.put(`/api/tasks/${task.id}`, task);
       toast.success("Task Updated");
       allTasks();
-      console.log(res);
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
@@ -91,6 +97,8 @@ export const GlobalProvider = ({ children }) => {
         modal,
         closeModal,
         openModal,
+        collapsed,
+        setCollpased,
       }}
     >
       <GlobalUpdateContext.Provider value={setSelectedTheme}>
